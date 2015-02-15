@@ -11,6 +11,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -18,12 +19,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.app.ListActivity;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-public class DeviceList extends ActionBarActivity {
+public class DeviceList extends      ActionBarActivity {
 
     // textview for connection status
     TextView textConnectionStatus;
@@ -33,6 +36,7 @@ public class DeviceList extends ActionBarActivity {
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter<String> mPairedDevicesArrayAdapter;
     public static String EXTRA_DEVICE_ADDRESS;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,9 +48,14 @@ public class DeviceList extends ActionBarActivity {
         tintManager.setStatusBarTintEnabled(true);
         // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(Color.parseColor("#0097A7"));
+        tintManager.setTintColor(Color.parseColor("#455ede"));
         textConnectionStatus = (TextView) findViewById(R.id.connecting);
-        textConnectionStatus.setTextSize(40);
+        //textConnectionStatus.setTextSize(40);
+
+        toolbar = (Toolbar)findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+
+
 
         // Initialize array adapter for paired devices
         mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
@@ -66,6 +75,7 @@ public class DeviceList extends ActionBarActivity {
 
         pairedListView.setAdapter(mPairedDevicesArrayAdapter);
         pairedListView.setOnItemClickListener(mDeviceClickListener);
+
 
     }
 
@@ -132,5 +142,25 @@ public class DeviceList extends ActionBarActivity {
     };
     public void Settings(View view){
         startActivity(new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_device_list, menu);
+        return true;
     }
 }

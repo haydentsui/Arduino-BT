@@ -25,6 +25,7 @@
         <activity
             android:name=".ArduinoMain"
             android:label="@string/title_activity_arduino_main" >
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".ArduinoMain"></meta-data>
         </activity>
     </application>
 

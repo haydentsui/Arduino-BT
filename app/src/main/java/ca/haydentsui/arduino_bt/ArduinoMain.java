@@ -10,15 +10,23 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class ArduinoMain extends ActionBarActivity {
 
@@ -46,12 +54,18 @@ public class ArduinoMain extends ActionBarActivity {
         setContentView(R.layout.activity_arduino_main);
 
         addKeyListener();
-
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(Color.parseColor("#455ede"));
         //Initialising buttons in the view
         //mDetect = (Button) findViewById(R.id.mDetect);
         functionOne = (Button) findViewById(R.id.functionOne);
         functionTwo = (Button) findViewById(R.id.functionTwo);
-
+        Toolbar toolbar = (Toolbar)findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
         //getting the bluetooth adapter value and calling checkBTstate function
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         checkBTState();
@@ -61,7 +75,8 @@ public class ArduinoMain extends ActionBarActivity {
          *  In this case send data is called with a value and a toast is made
          *  to give visual feedback of the selection made
          */
-
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         functionOne.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 sendData("1");
@@ -187,6 +202,21 @@ public class ArduinoMain extends ActionBarActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if(id==android.R.id.home){
+            NavUtils.navigateUpFromSameTask(this);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
