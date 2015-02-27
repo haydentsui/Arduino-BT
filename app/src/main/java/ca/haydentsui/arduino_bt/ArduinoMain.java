@@ -17,6 +17,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -80,14 +81,14 @@ public class ArduinoMain extends ActionBarActivity {
         functionOne.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 sendData("1");
-                Toast.makeText(getBaseContext(), "Function 1", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_SHORT).show();
             }
         });
 
         functionTwo.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 sendData("2");
-                Toast.makeText(getBaseContext(), "Function 2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "2", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -177,7 +178,7 @@ public class ArduinoMain extends ActionBarActivity {
             outStream.write(msgBuffer);
         } catch (IOException e) {
             //if the sending fails this is most likely because device is no longer there
-            Toast.makeText(getBaseContext(), "ERROR - Device not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "ERROR - Device not found", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -194,7 +195,7 @@ public class ArduinoMain extends ActionBarActivity {
                 if ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.getAction() == KeyEvent.ACTION_DOWN)) {
                     //I have put the * in automatically so it is no longer needed when entering text
                     sendData('*' + editText.getText().toString());
-                    Toast.makeText(getBaseContext(), "Sending text", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Sending text", Toast.LENGTH_SHORT).show();
 
                     return true;
                 }
@@ -218,6 +219,12 @@ public class ArduinoMain extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_device_list, menu);
+        return true;
+    }
 }
 
