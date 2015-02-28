@@ -34,6 +34,7 @@ public class CustomArrayAdapter extends ArrayAdapter<String> {
         String p = values[position];
 
         tv.setText(p);
+        //
         //distView.setText("" + p.getDistance());
 
 
